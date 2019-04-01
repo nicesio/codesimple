@@ -1,0 +1,41 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?>		<footer>
+			<div class="footer">
+				<div class="container">
+
+					<div class="grid-8 footer_historia">
+						<h3>Nossa História</h3>
+						<p>"O Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.O Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "</p>
+					</div>
+
+					<div class="grid-4 footer_contato">
+						<h3>Contato</h3>
+						<ul>
+							<li>* 35 7777-7777</li>
+							<li>* contato@codesimple.com.br</li>
+							<li>* Alfenas - MG</li>
+						</ul>
+					</div>
+
+					<div class="grid-4 footer_redes">
+						<h3>Contato</h3>
+						<ul>
+							<li><a href="http://facebook.com" target="_blank"><img src="/res/site/img/redes-sociais/facebookroxo.png"></a></li>
+							<li><a href="http://instagram.com" target="_blank"><img src="/res/site/img/redes-sociais/instagramroxo.png"></a></li>
+							<li><a href="http://twitter.com" target="_blank"><img src="/res/site/img/redes-sociais/twitterroxo.png"></a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div class="copy">
+			  	<div class="container">
+			  		<p class="grid-16">Code Simple 2019 - Alguns direitos reservados.</p>
+			 	</div>
+			</div>
+	    </footer> 
+
+	</body>
+</html>
