@@ -4,16 +4,16 @@ namespace codesimple\Model;
 
 use \codesimple\DB\Sql;
 use \codesimple\Model;
-use \codesimple\Mailer;
+//use \codesimple\Mailer;
 
-class User extends Model
+class Usuario extends Model
 {
-	const SESSION="User";
+	const SESSION="Usuario";
 	const SECRET = "codesimple7_Secret";
 
 	public static function login($login, $password){
 		$sql = new Sql;
-		$results = $sql->select("SELECT * FROM tb_usuarios WHERE nomeusuario = :LOGIN", array(":LOGIN"=>$login));
+		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :NOMEUSUARIO", array(":NOMEUSUARIO"=>$login));
 
 		if (count ($results) === 0){
 			throw new \Exception("Usuario Inexistente ou senha invalida.");
@@ -23,13 +23,13 @@ class User extends Model
 		$data = $results[0];
 
 		if (password_verify($password, $data["senhausuario"])===true){
-			$user = new User();
+			$usuario = new Usuario();
 
-			$user->setData($data["idusuario"]);
+			$usuario->setData($data["idusuario"]);
 
-			$_SESSION[User::SESSION] = $use->getValues();
+			$_SESSION[Usuario::SESSION] = $usuario->getValues();
 
-			return $user;
+			return $usuario;
 
 		}else{
 			throw new \Exception("Usuario inexistente ou senha invalida");
@@ -39,12 +39,11 @@ class User extends Model
 
 	public static function verifyLogin(){
 		if(
-			!isset($_SESSION[User::SESSION])
+			!isset($_SESSION[Usuario::SESSION])
 			||
-			!$_SESSION[User::SESSION]
+			!$_SESSION[Usuario::SESSION]
 			||
-			!(int)$_SESSION[User::SESSION]["idusuario"] > 0
-			||
+			!(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0
 			){
 			header("Location: /admin/login");
 			exit;
@@ -54,25 +53,26 @@ class User extends Model
 
 	public static function logout()
 	{
-		$_SESSION[User::SESSION]=NULL;
+		$_SESSION[Usuario::SESSION]=NULL;
 	}
 
 	public static function listAll(){
 		$sql = new Sql();
-		return $sql->select("SELECT * FROM tb_usuarios a INNER JOIN tb_usuarios b USING(idusuario) ORDER BY b.nomeusuario");
+		return $sql->select("SELECT * FROM usuarios ORDER BY idusuario");
 	}
 
 	public function save(){
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usuarios_save(:nomeusuario, :senhausuario, :emailusuario)", array (
+		$results = $sql->select("CALL sp_users_save(:nomeusuario, :senhausuario, :emailusuario)", array (
 			":nomeusuario"=>$this->getnomeusuario(),
 			":senhausuario"=>$this->getsenhausuario(),
 			":emailusuario"=>$this->getemailusuario()
-			
-	));
+		));
 
 		$this->setData($results[0]);
+		
+				
 	}
 
 
@@ -80,20 +80,20 @@ class User extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_usuarios WHERE iduser", array(
-			":iduser"=>$iduser
+		$results = $sql->select("SELECT * FROM usuarios WHERE idusuario", array(
+			":idusuario"=>$idusuario
 		));
 
-		$data($results[0]);
+		//$data($results[0]);
 
-		$this->setData($data);
+		$this->setData($results[0]);
 	}
 
 
 	public function update(){
-		$sql = new Save();
+		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usuariosupdate_save(:idusuario, :nomeusuario, :senhausuario, :emailusuario)", array (
+		$results = $sql->select("CALL sp_usersupdate_save(:idusuario, :nomeusuario, :senhausuario, :emailusuario)", array (
 			":idusuario"=>$this->getidusuario(),
 			":nomeusuario"=>$this->getnomeusuario(),
 			":senhausuario"=>$this->getsenhausuario(),
@@ -110,7 +110,7 @@ class User extends Model
 
 		$sql = new Sql();
 
-		$sql->query("CALL sp_usuarios_delete(:iduser)", array(
+		$sql->query("CALL sp_users_delete(:idusuario)", array(
 			":idusuario"=>$this->getidusuario()
 		));
 
