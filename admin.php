@@ -1,11 +1,11 @@
 <?php
 
 use \codesimple\PageAdmin;
-use \codesimple\Model\User;
+use \codesimple\Model\Usuario;
 
 $app->get('/admin', function() {
 
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$page = new PageAdmin();
 
@@ -22,14 +22,14 @@ $app->get('/admin/login', function(){
 });
 
 $app->post('/admin/login', function(){
-	User::login($_POST["nomeusuario"], $_POST["senhausuario"]);
+	Usuario::login($_POST["usuario"], $_POST["senhausuario"]);
 
 	header("Location: /admin");
 	exit;
 });
 
 $app->get('/admin/logout', function(){
-	User::logout();
+	Usuario::logout();
 	header("Location: /admin/login");
 	exit;
 });

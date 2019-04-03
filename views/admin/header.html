@@ -257,9 +257,9 @@ desired effect
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/admin/usuarios"><i class="fa fa-users"></i> <span>Usuarios</span></a></li>
-        <li><a href="/admin/categories"><i class="fa fa-link"></i> <span>Categorias</span></a></li>
+        <li><a href="/admin/projetos"><i class="fa fa-link"></i> <span>Projetos</span></a></li>
         <li class="treeview">
-          <a href="/admin/products"><i class="fa fa-link"></i> <span>Produtos</span>
+          <a href="/admin/servicos"><i class="fa fa-link"></i> <span>Serviços</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hcode\Model;
+namespace codesimple\Model;
 
 use \Hcode\DB\Sql;
 use \Hcode\Model;

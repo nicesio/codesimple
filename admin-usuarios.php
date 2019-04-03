@@ -4,7 +4,7 @@ use \codesimple\PageAdmin;
 use \codesimple\Model\Usuario;
 
 $app->get("/admin/usuarios", function(){
-	Usuario::verifyLogin();
+	//Usuario::verifyLogin();
 	$usuario = Usuario::listAll();
 	//$users = Usuario::listAll();
 	$page = new PageAdmin();

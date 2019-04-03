@@ -9,11 +9,11 @@ use \codesimple\Model;
 class Usuario extends Model
 {
 	const SESSION="Usuario";
-	const SECRET = "codesimple7_Secret";
+	//const SECRET = "codesimple7_Secret";
 
-	public static function login($login, $password){
+	public static function login($usuario, $senhausuario){
 		$sql = new Sql;
-		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :NOMEUSUARIO", array(":NOMEUSUARIO"=>$login));
+		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :usuario", array(":usuario"=>$usuario));
 
 		if (count ($results) === 0){
 			throw new \Exception("Usuario Inexistente ou senha invalida.");
@@ -22,7 +22,7 @@ class Usuario extends Model
 
 		$data = $results[0];
 
-		if (password_verify($password, $data["senhausuario"])===true){
+		if (password_verify($senhausuario, $data["senhausuario"])===true){
 			$usuario = new Usuario();
 
 			$usuario->setData($data["idusuario"]);
@@ -70,6 +70,8 @@ class Usuario extends Model
 			":emailusuario"=>$this->getemailusuario()
 		));
 
+		//$senhausuario = password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
+
 		$this->setData($results[0]);
 		
 				
@@ -80,7 +82,7 @@ class Usuario extends Model
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM usuarios WHERE idusuario", array(
+		$results = $sql->select("SELECT * FROM usuarios WHERE idusuario = :idusuario", array(
 			":idusuario"=>$idusuario
 		));
 
@@ -110,9 +112,9 @@ class Usuario extends Model
 
 		$sql = new Sql();
 
-		$sql->query("CALL sp_users_delete(:idusuario)", array(
+		$sql->query("DELETE FROM usuarios WHERE idusuario = :idusuario", [
 			":idusuario"=>$this->getidusuario()
-		));
+		]);
 
 	}
 

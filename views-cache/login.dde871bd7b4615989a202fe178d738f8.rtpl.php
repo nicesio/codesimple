@@ -33,13 +33,13 @@
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <form action="/admin" method="post">
+    <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
-        <input type="usuario" class="form-control" placeholder="Usuario">
+        <input type="usuario" class="form-control" placeholder="Usuario" name ="usuario">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" name = senhausuario>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

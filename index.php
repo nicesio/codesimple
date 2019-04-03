@@ -12,7 +12,7 @@ $app->config('debug', true);
 require_once("site.php");
 require_once("admin.php");
 require_once("admin-usuarios.php");
-//require_once("admin-categories.php");
+require_once("admin-projetos.php");
 //require_once("admin-products.php");
 
 
