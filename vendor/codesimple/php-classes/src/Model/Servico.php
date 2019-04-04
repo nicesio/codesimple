@@ -2,22 +2,22 @@
 
 namespace codesimple\Model;
 
-use \Hcode\DB\Sql;
-use \Hcode\Model;
-use \Hcode\Mailer;
+use \codesimple\DB\Sql;
+use \codesimple\Model;
+use \codesimple\Mailer;
 
-class Product extends Model
+class Servico extends Model
 {
 	
 	public static function listAll(){
 		$sql = new Sql();
-		return $sql->select("SELECT * FROM tb_products ORDER BY desproduct");
+		return $sql->select("SELECT * FROM servicos ORDER BY nomeservico");
 	}
 
 	public static function checkList($list){
 
 		foreach ($list as &$row) {
-			$p = new Product();
+			$p = new Servico();
 			$p->setData($row);
 			$row = $p->getValues();
 
@@ -31,15 +31,10 @@ class Product extends Model
 	public function save(){
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :desurl)", array(
-				":idproduct"=>$this->getidproduct(),
-				":desproduct"=>$this->getdesproduct(),
-				":vlprice"=>$this->getvlprice(),
-				":vlwidth"=>$this->getvlwidth(),
-				":vlheight"=>$this->getvlheight(),
-				":vllength"=>$this->getvllength(),
-				":vlweight"=>$this->getvlweight(),
-				":desurl"=>$this->getdesurl()
+		$results = $sql->select("CALL sp_servicos_save(:idservico, :nomeservico, :desservico)", array(
+				":idservico"=>$this->getidservico(),
+				":nomeservico"=>$this->getnomeservico(),
+				":desservico"=>$this->getdesservico()
 		));
 
 		$this->setData($results[0]);
@@ -47,11 +42,11 @@ class Product extends Model
 		
 	}
 
-	public function get($idproduct){
+	public function get($idservico){
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_products WHERE idproduct = :idproduct", 
-				[':idproduct'=>$idproduct
+		$results = $sql->select("SELECT * FROM servicos WHERE idservico = :idservico", 
+				[':idservico'=>$idservico
 
 		]);
 
@@ -64,8 +59,8 @@ class Product extends Model
 
 	$sql = new Sql();
 
-		$sql->query("DELETE FROM tb_products WHERE idproduct = :idproduct", 
-				[':idproduct'=>$this->getidproduct()
+		$sql->query("DELETE FROM servicos WHERE idservico = :idservico", 
+				[':idservico'=>$this->getidservico()
 
 		]);	
 
@@ -73,12 +68,12 @@ class Product extends Model
 
 	public function checkPhoto(){
 		if(file_exists(
-			$_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "res" . DIRECTORY_SEPARATOR . "site" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "products" . DIRECTORY_SEPARATOR . $this->getidproduct() . ".jpg"
+			$_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "res" . DIRECTORY_SEPARATOR . "site" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "servicos" . DIRECTORY_SEPARATOR . $this->getidservico() . ".jpg"
 		))
 		{
-			$url = "/res/site/img/products" . $this->getidproduct() . ".jpg";
+			$url = "/res/site/img/servicos" . $this->getidservico() . ".jpg";
 		}else{
-			$url = "/res/site/img/product.jpg";
+			$url = "/res/site/img/servico.jpg";
 		}
 
 		return $this->setdesphoto($url);
@@ -116,7 +111,7 @@ class Product extends Model
 			
 		}
 
-		$dist = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "res" . DIRECTORY_SEPARATOR . "site" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "products" . DIRECTORY_SEPARATOR . $this->getidproduct() . ".jpg";
+		$dist = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "res" . DIRECTORY_SEPARATOR . "site" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "servicos" . DIRECTORY_SEPARATOR . $this->getidservico() . ".jpg";
 
 		imagejpeg($image, $dist);
 

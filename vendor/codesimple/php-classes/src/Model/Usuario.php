@@ -11,10 +11,12 @@ class Usuario extends Model
 	const SESSION="Usuario";
 	//const SECRET = "codesimple7_Secret";
 
-	public static function login($usuario, $senhausuario){
+	/*public static function login($nomeusuario, $senhausuario){
 		$sql = new Sql;
-		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :usuario", array(":usuario"=>$usuario));
-
+		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :nomeusuario", array(":nomeusuario"=>$nomeusuario));
+		//$senhahash = $sql->select("SELECT * FROM usuarios WHERE senhausuario = :senhausuario",[
+		//	":senhausuario"=>password_hash($senhausuario, PASSWORD_DEFAULT)
+		//]);
 		if (count ($results) === 0){
 			throw new \Exception("Usuario Inexistente ou senha invalida.");
 			
@@ -35,7 +37,34 @@ class Usuario extends Model
 			throw new \Exception("Usuario inexistente ou senha invalida");
 			
 		}
+	}*/
+
+	public static function login($usuario, $senhausuario){
+
+		$usuario = $_POST["usuario"];
+		$senhausuario = $_POST["senhausuario"];
+
+		$sql = new Sql();
+
+		$results = query("SELECT * FROM usuarios WHERE 'nomeusuario' = '$usuario' AND 'senhausuario' = '$senhausuario'");
+
+		if(mysql_num_rows ($results) > 0 )
+		{
+				$_SESSION['usuario'] = $usuario;
+				$_SESSION['senhausuario'] = $senhausuario;
+				//header('location:site.php');
+		}
+		else
+		{
+  				unset ($_SESSION['usuario']);
+  				unset ($_SESSION['senhausuario']);
+  				//header('location:index.php');
+  		}
 	}
+	
+
+
+
 
 	public static function verifyLogin(){
 		if(
@@ -64,7 +93,8 @@ class Usuario extends Model
 	public function save(){
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_users_save(:nomeusuario, :senhausuario, :emailusuario)", array (
+		$results = $sql->select("CALL sp_users_save(:idusuario, :nomeusuario, :senhausuario, :emailusuario)", array (
+			":idusuario"=>$this->getidusuario(),
 			":nomeusuario"=>$this->getnomeusuario(),
 			":senhausuario"=>$this->getsenhausuario(),
 			":emailusuario"=>$this->getemailusuario()

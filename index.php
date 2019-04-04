@@ -13,7 +13,7 @@ require_once("site.php");
 require_once("admin.php");
 require_once("admin-usuarios.php");
 require_once("admin-projetos.php");
-//require_once("admin-products.php");
+require_once("admin-servicos.php");
 
 
 $app->run();

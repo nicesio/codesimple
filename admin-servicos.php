@@ -1,92 +1,92 @@
 <?php
 
-use \Hcode\PageAdmin;
-use \Hcode\Model\User;
-use \Hcode\Model\Product;
+use \codesimple\PageAdmin;
+use \codesimple\Model\Usuario;
+use \codesimple\Model\Servico;
 
 
-$app->get("/admin/products", function(){
+$app->get("/admin/servicos", function(){
 
 	//User::verifyLogin();
 
-	$products = Product::listAll();
+	$servicos = Servico::listAll();
 
 	$page = new PageAdmin();
 
-	$page->setTpl("products", [
-		"products"=>$products
+	$page->setTpl("servicos", [
+		"servicos"=>$servicos
 	]);
 
 });
 
 
 
-$app->get("/admin/products/create", function(){
+$app->get("/admin/servicos/create", function(){
 
 	//User::verifyLogin();
 
 	$page = new PageAdmin();
 
-	$page->setTpl("products-create");
+	$page->setTpl("servicos-create");
 
 });
 
-$app->post("/admin/products/create", function(){
+$app->post("/admin/servicos/create", function(){
 
 	//User::verifyLogin();
 
-	$product = new Product();
+	$servico = new Servico();
 
-	$product->setData($_POST);
+	$servico->setData($_POST);
 
-	$product->save();
+	$servico->save();
 
-	header("Location: /admin/products");
+	header("Location: /admin/servicos");
 	exit;
 });
 
-$app->get("/admin/products/:iduser/delete", function($idproduct){
+$app->get("/admin/servicos/:iduser/delete", function($idservico){
 	//User::verifyLogin();
 
-	$product = new Product();
+	$servico = new Servico();
 
-	$product->get((int)$idproduct);
+	$servico->get((int)$idservico);
 
-	$product->delete();
+	$servico->delete();
 
-	header("Location: /admin/products");
+	header("Location: /admin/servicos");
 	exit;
 });
 
 
-$app->get("/admin/products/:idproduct", function($idproduct){
+$app->get("/admin/servicos/:idservico", function($idservico){
 
-	$product = new Product();
+	$servico = new Servico();
 
-	$product->get((int)$idproduct);
+	$servico->get((int)$idservico);
 
 	$page = new PageAdmin();
 
-	$page->setTpl("products-update", [
-		'product'=>$product->getValues()
+	$page->setTpl("servicos-update", [
+		'servico'=>$servico->getValues()
 	]);
 
 });
 
 
-$app->post("/admin/products/:idproduct", function($idproduct){
+$app->post("/admin/servicos/:idservico", function($idservico){
 
-	$product = new Product();
+	$servico = new Servico();
 
-	$product->get((int)$idproduct);
+	$servico->get((int)$idservico);
 
-	$product->setData($_POST);
+	$servico->setData($_POST);
 
-	$product->save();
+	$servico->save();
 
-	$product->setPhoto($_FILES["file"]);
+	$servico->setPhoto($_FILES["file"]);
 
-	header('Location: /admin/products');
+	header('Location: /admin/servicos');
 	exit;
 
 });
