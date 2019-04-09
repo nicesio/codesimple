@@ -4,7 +4,7 @@ use \codesimple\PageAdmin;
 use \codesimple\Model\Usuario;
 
 $app->get("/admin/usuarios", function(){
-	//Usuario::verifyLogin();
+	Usuario::verifyLogin();
 	$usuario = Usuario::listAll();
 	//$users = Usuario::listAll();
 	$page = new PageAdmin();
@@ -14,13 +14,13 @@ $app->get("/admin/usuarios", function(){
 });
 
 $app->get("/admin/usuarios/create", function(){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 	$page = new PageAdmin();
 	$page->setTpl("usuarios-create");
 });
 
 $app->get("/admin/usuarios/:idusuario/delete", function($idusuario){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$usuario = new Usuario();
 
@@ -34,7 +34,7 @@ $app->get("/admin/usuarios/:idusuario/delete", function($idusuario){
 
 
 $app->get("/admin/usuarios/:idusuario", function($idusuario){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 	
 	$usuario = new Usuario();
 
@@ -48,7 +48,7 @@ $app->get("/admin/usuarios/:idusuario", function($idusuario){
 
 
 $app->post("/admin/usuarios/create", function(){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$usuario = new Usuario();
 
@@ -71,7 +71,7 @@ $app->post("/admin/usuarios/create", function(){
 });
 
 $app->post("/admin/usuarios/:idusuario", function($idusuario){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$usuario = new Usuario();
 

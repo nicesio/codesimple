@@ -7,6 +7,7 @@ use \codesimple\Model\Projeto;
 
 $app->get("/admin/projetos", function(){
 
+	Usuario::verifyLogin();
 	$projetos = Projeto::listAll();
 
 	$page = new PageAdmin();
@@ -17,12 +18,14 @@ $app->get("/admin/projetos", function(){
 });
 
 $app->get("/admin/projetos/create", function(){
+	Usuario::verifyLogin();
 	$page = new PageAdmin();
 
 	$page->setTpl("projetos-create");
 });
 
 $app->post("/admin/projetos/create", function(){
+	Usuario::verifyLogin();
 
 	$projeto = new Projeto();
 
@@ -37,7 +40,7 @@ $app->post("/admin/projetos/create", function(){
 
 
 $app->get("/admin/projetos/:idprojeto/delete", function($idprojeto){
-
+	Usuario::verifyLogin();
 	$projeto = new Projeto();
 
 	$projeto->get((int)$idprojeto);
@@ -51,7 +54,7 @@ $app->get("/admin/projetos/:idprojeto/delete", function($idprojeto){
 
 
 $app->get("/admin/projetos/:idprojeto", function($idprojeto){
-
+	Usuario::verifyLogin();
 	$projeto = new Projeto();
 
 	$projeto->get((int)$idprojeto);
@@ -66,7 +69,7 @@ $app->get("/admin/projetos/:idprojeto", function($idprojeto){
 
 
 $app->post("/admin/projetos/:idprojeto", function($idprojeto){
-
+	Usuario::verifyLogin();
 	$projeto = new Projeto();
 
 	$projeto->get((int)$idprojeto);
@@ -81,6 +84,8 @@ $app->post("/admin/projetos/:idprojeto", function($idprojeto){
 });
 
 $app->get("/projetos/:idprojeto", function($idprojeto){
+	
+	Usuario::verifyLogin();
 	$projeto = new Projeto();
 	
 	$projeto->get((int)$idprojeto);

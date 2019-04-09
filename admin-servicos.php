@@ -7,7 +7,7 @@ use \codesimple\Model\Servico;
 
 $app->get("/admin/servicos", function(){
 
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$servicos = Servico::listAll();
 
@@ -23,7 +23,7 @@ $app->get("/admin/servicos", function(){
 
 $app->get("/admin/servicos/create", function(){
 
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$page = new PageAdmin();
 
@@ -33,7 +33,7 @@ $app->get("/admin/servicos/create", function(){
 
 $app->post("/admin/servicos/create", function(){
 
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$servico = new Servico();
 
@@ -46,7 +46,7 @@ $app->post("/admin/servicos/create", function(){
 });
 
 $app->get("/admin/servicos/:iduser/delete", function($idservico){
-	//User::verifyLogin();
+	Usuario::verifyLogin();
 
 	$servico = new Servico();
 

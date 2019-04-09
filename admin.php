@@ -5,7 +5,7 @@ use \codesimple\Model\Usuario;
 
 $app->get('/admin', function() {
 
-	//Usuario::verifyLogin();
+	Usuario::verifyLogin();
 
 	$page = new PageAdmin();
 

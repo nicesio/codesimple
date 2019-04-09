@@ -79,13 +79,13 @@ class Usuario extends Model
 
 	}
 
-	public static function verifyLogin(){
+	public static function verifyLogin($idusuario = true){
 		if(
-			!isset($_SESSION[Usuario::SESSION])
+			isset($_SESSION[Usuario::SESSION])
 			||
-			!$_SESSION[Usuario::SESSION]
+			$_SESSION[Usuario::SESSION]
 			||
-			!(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0
+			(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0
 			//(bool)$_SESSION[User::SESSION]["inadmin"]!==$inadmin
 		){
 			header("Location: /admin/login");
