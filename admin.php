@@ -5,7 +5,7 @@ use \codesimple\Model\Usuario;
 
 $app->get('/admin', function() {
 
-	Usuario::verifyLogin();
+	//Usuario::verifyLogin();
 
 	$page = new PageAdmin();
 
@@ -22,6 +22,9 @@ $app->get('/admin/login', function(){
 });
 
 $app->post('/admin/login', function(){
+
+	
+	
 	Usuario::login($_POST["usuario"], $_POST["senhausuario"]);
 
 	header("Location: /admin");

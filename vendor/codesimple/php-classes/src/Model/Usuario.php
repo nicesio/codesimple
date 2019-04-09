@@ -10,13 +10,11 @@ class Usuario extends Model
 {
 	const SESSION="Usuario";
 	//const SECRET = "codesimple7_Secret";
-
-	/*public static function login($nomeusuario, $senhausuario){
+	
+	/*public static function login($usuario, $senhausuario){
 		$sql = new Sql;
-		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :nomeusuario", array(":nomeusuario"=>$nomeusuario));
-		//$senhahash = $sql->select("SELECT * FROM usuarios WHERE senhausuario = :senhausuario",[
-		//	":senhausuario"=>password_hash($senhausuario, PASSWORD_DEFAULT)
-		//]);
+		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = :NOMEUSUARIO", array(":NOMEUSUARIO"=>$usuario));
+
 		if (count ($results) === 0){
 			throw new \Exception("Usuario Inexistente ou senha invalida.");
 			
@@ -24,10 +22,12 @@ class Usuario extends Model
 
 		$data = $results[0];
 
+
+
 		if (password_verify($senhausuario, $data["senhausuario"])===true){
 			$usuario = new Usuario();
 
-			$usuario->setData($data["idusuario"]);
+			$user->setData($data["idusuario"]);
 
 			$_SESSION[Usuario::SESSION] = $usuario->getValues();
 
@@ -39,32 +39,45 @@ class Usuario extends Model
 		}
 	}*/
 
-	public static function login($usuario, $senhausuario){
-
-		$usuario = $_POST["usuario"];
-		$senhausuario = $_POST["senhausuario"];
-
+	public static function login($nomeusuario, $senhausuario){
 		$sql = new Sql();
 
-		$results = query("SELECT * FROM usuarios WHERE 'nomeusuario' = '$usuario' AND 'senhausuario' = '$senhausuario'");
-
-		if(mysql_num_rows ($results) > 0 )
-		{
-				$_SESSION['usuario'] = $usuario;
-				$_SESSION['senhausuario'] = $senhausuario;
-				//header('location:site.php');
+		if (empty($_POST['usuario'])||empty($_POST['senhausuario'])){
+			header('Location: /admin/login');
 		}
-		else
-		{
-  				unset ($_SESSION['usuario']);
-  				unset ($_SESSION['senhausuario']);
-  				//header('location:index.php');
-  		}
+
+		//$usuario = mysqli_real_escape_string($sql, $_POST['usuario']);
+		//$senhausuario = mysqli_real_escape_string($sql, $_POST['senhausuario']);
+
+		$results = $sql->select("SELECT * FROM usuarios WHERE nomeusuario = '{$nomeusuario}' AND senhausuario = md5('{$senhausuario}')");
+
+		//$results = ($query);
+
+		//$row = ($results);
+
+
+
+		if (count ($results) === 0){
+			throw new \Exception("Usuario Inexistente ou senha invalida.");
+		}  
+
+		$data = $results[0];
+		
+		if ($results ===1){
+
+			$usuario = new Usuario();
+
+			$usuario->setData($data["idusuario"]);
+
+			$_SESSION[Usuario::SESSION] = $usuario->getValues();
+			return $usuario;
+		}
+		else{
+			header('Location: /admin/login');	
+		}
+
+
 	}
-	
-
-
-
 
 	public static function verifyLogin(){
 		if(
@@ -73,7 +86,8 @@ class Usuario extends Model
 			!$_SESSION[Usuario::SESSION]
 			||
 			!(int)$_SESSION[Usuario::SESSION]["idusuario"] > 0
-			){
+			//(bool)$_SESSION[User::SESSION]["inadmin"]!==$inadmin
+		){
 			header("Location: /admin/login");
 			exit;
 		}
@@ -153,7 +167,7 @@ class Usuario extends Model
 	public function setPassword($senhausuario){
 		$sql = new Sql();
 
-		$sql->query("UPDATE tb_usuarios SET senhausuario = :senhausuario WHERE idusuario = :idusuario", array(
+		$sql->query("UPDATE usuarios SET senhausuario = :senhausuario WHERE idusuario = :idusuario", array(
 				":senhausuario"=>$senhausuario,
 				":idusuario"=>$this->getidusuario()
 		));
